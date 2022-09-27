@@ -1,0 +1,5 @@
+.dockerignore
+Dockerfile
+.gcloudignore
+node_modules
+npm-debug.log
