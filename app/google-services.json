@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "447744579579",
+    "firebase_url": "https://beach-bluenoser-default-rtdb.firebaseio.com",
+    "project_id": "beach-bluenoser",
+    "storage_bucket": "beach-bluenoser.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447744579579:android:b2023692b83031adb69d5e",
+        "android_client_info": {
+          "package_name": "com.example.beachbluenoser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447744579579-iv7oi8gl3257l9e549mb7ndjugpbrdcd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAirtbfGtg6uwxqdI-ieiQmDxEi6pF-4QU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447744579579-iv7oi8gl3257l9e549mb7ndjugpbrdcd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
