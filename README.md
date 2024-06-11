@@ -1,92 +1,28 @@
-# BeachBluenoserApp
+Beach Bluenoser - Closing Document
 
+The App:
+I led a team to successfully develop the Beach Bluenoser application for our client Miss Naomi Buchanan. The application was created for the purposes of getting real-time information regarding Nova Scotia Beaches such as weather, parking capacity information, accessibility information, lifeguard information, as well as environmental warnings such as extreme weather conditions, algae bloom, or on-going construction. 
+The app also allowed users to create accounts, plan trips and add beaches to their favorites, and leave reviews. Furthermore, the app had specialized admin and lifeguard’s accounts for content management and adding critical information regarding beaches.
 
+How To Deploy the App:
+To obtain the source code you will need to clone the repo via git or download the zip file.
 
-## Getting started
+Firebase Access: 
+To prepare the application for release, the client must first remove both the log calls as well as the “android:debuggable” attribute from the android manifest file. Next, they will need to set the app's version information. Finally, they must use the release build type Gradle files to build and sign a release version. Once all of these are completed, the client has a few different options for how to release the application. More information about the preparation and release of the application can be found here: https://developer.android.com/studio/publish 
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Client Maintenance Requirements:
+For the purposes of beach capacity, parking capacity etc. (user/lifeguard survey data), The application is storing the data automatically data based on the day, meaning the data for each beach will reset every day. And the results on the beach landing page will show the average results from the beach surveys for that day. At the end of the day, all the survey results for that day are stored in the database for recordkeeping and can be accessed via navigating to the corresponding dates. Although this is all done automatically, it should be monitored regularly that it is working properly. There is currently a limit of 1 GiB for how much of this data can be stored in Firebase, any more than that would cost more money to maintain. Because of this, it would be recommended to export this data regularly, or at the very least set up a backup to store the data outside of the Firebase Firestore.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Client Administrative Requirements:
+The client is responsible for updating the permissions for the management accounts. Whenever a new management user or company needs to create an account, they must contact the client and either the client can create the account with the correct permissions, or they can update the permissions of an already existing account. Both currently need to be done manually within the database. This task is generally simple, but involves going to the BBUSERSTABLE_PROD, selecting the users ID of an already created account and changing the “userType” from “user” to “Lifeguard” (capital L is important).
+Along with this, creating beach codes for the lifeguards to sign in with needs to be done for each beach. Currently the first 2 beaches are setup. To do this, go into the database table “AccessToken” and add the beach name. Inside this new collection, add a field called “Token” with the value of whatever token you may want. Lastly add the beach name as a field called “beachName”.
+software and sync/rebuilding the Gradle files (this may take a little bit of time to build for the first time while all dependencies get installed). Read the deployment guide provided here or on confluence to see how the request the access to firebase however, in terms of the database itself everything should be self-contained to a point where the Firebase credentials are stored in the code, but if not, the IDE provides step-by-step instructions (can also be found at: https://firebase.google.com/docs/android/setup)
 
-## Add your files
+Website and the App
+This application was created from the existing website, making user of the same database for seamless interactions and integrations. However, the last team (the team before us), did change the requirements for many fields in the database so the user registration on the website no longer matches that on the app and we have utilized those fields for some of the new features that were added during this semester. However, since the website users currently go into the “usertable” table, and the app users currently go into “BBUSERSTABLE_PROD” table it should not cause any breaks.
+The application is currently operational, but it is not done with development. There are still a lot of frontend development and extra features that the client want added to provide a much more clean and refined experience for the user. Moreover, the client also wants this app on IOS so porting the application is another thing worth investigating. In its current state the client should be able to beta test the application and get user feedback on the functionality of the features and find any bugs that may have been missed.
+Updating Beach Images
+As per the client instructions, the images are hardcoded into the firebase and app as opposed to being fetched via an API. To update and add photos within the firebase and the applications first select the required photo in your system rename it using underscores and add them to the drawable folder. Next rename the same image in the firebase but use dashes instead underscores. Make sure all the.jpg is added for all the images
+Geolocation Tracking
+For working on geolocation, the app is currently requesting permission from users in the UserDataSurvey.java file lines 135 – 166. Once permissions are granted the user should have their location taken and verified that it is within 5 KM of the beach they are checking into. They should then be able to fill out the contents of the survey and update the beaches page accordingly. The API we are using for this feature is the “Maps SDK for Android”.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://git.cs.dal.ca/wiedemann/bluenoserApp.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://git.cs.dal.ca/wiedemann/bluenoserApp/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
